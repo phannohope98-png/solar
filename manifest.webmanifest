@@ -1,0 +1,18 @@
+{
+  "name": "Dự toán điện mặt trời",
+  "short_name": "Dự toán ĐMT",
+  "description": "Tính nhanh chi phí lắp điện mặt trời và số tiền điện tiết kiệm được",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF3F8",
+  "theme_color": "#1D3A6E",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
