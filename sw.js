@@ -1,5 +1,5 @@
 // Đổi số phiên bản mỗi lần up bản mới để điện thoại tải lại
-const CACHE = 'solar-v3';
+const CACHE = 'solar-v4';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
