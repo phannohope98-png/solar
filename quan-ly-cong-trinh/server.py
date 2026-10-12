@@ -501,6 +501,7 @@ class Handler(BaseHTTPRequestHandler):
 def backup(destination):
     target = Path(destination).resolve()
     if DATA == target or DATA in target.parents: raise Invalid('Lưu bản sao lưu ngoài thư mục data.')
+    if target.exists(): raise Invalid('Bản sao lưu đã tồn tại. Chọn tên mới để giữ bản cũ.')
     target.parent.mkdir(parents=True, exist_ok=True)
     temp = target.with_suffix('.sqlite3')
     copy = sqlite3.connect(temp)
@@ -524,7 +525,7 @@ def main():
     parser.add_argument('--demo', action='store_true')
     parser.add_argument('--init', action='store_true')
     parser.add_argument('--host', default='127.0.0.1')
-    parser.add_argument('--port', type=int, default=8765)
+    parser.add_argument('--port', type=int, default=8878)
     parser.add_argument('--backup')
     args = parser.parse_args()
     if args.demo:

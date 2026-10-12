@@ -15,7 +15,7 @@
 
 ## Chạy thử nhanh trên Windows
 
-Cài Python **3.12 hoặc mới hơn** từ [python.org](https://www.python.org/downloads/), chọn thêm Python vào PATH nếu trình cài đặt hỗ trợ. Không cần Node, npm, dịch vụ cloud hay thư viện pip.
+Các file `.cmd` tự tìm Python: Python launcher, runtime đi kèm Codex nếu có, rồi `python` trong PATH. Trên máy đang dùng Codex này có thể bấm chạy ngay. Trên máy khác, nếu chưa có Python, cài Python **3.12 hoặc mới hơn** từ [python.org](https://www.python.org/downloads/), chọn thêm Python vào PATH nếu trình cài đặt hỗ trợ. Không cần Node, npm, dịch vụ cloud hay thư viện pip.
 
 Tải repository → mở thư mục `quan-ly-cong-trinh` → bấm đúp **start-demo.cmd**. Hoặc mở terminal tại thư mục này:
 
@@ -23,10 +23,10 @@ Tải repository → mở thư mục `quan-ly-cong-trinh` → bấm đúp **star
 python server.py --demo
 ```
 
-Mở địa chỉ được in ra, mặc định **http://127.0.0.1:8765**. Nếu cổng đã được sử dụng:
+Mở địa chỉ được in ra, mặc định **http://127.0.0.1:8878**. Nếu cổng đã được sử dụng:
 
 ```powershell
-python server.py --demo --port 8878
+python server.py --demo --port 8879
 ```
 
 Bản mẫu có 3 vai trò, cùng mật khẩu **SolarDemo2026!**:
@@ -44,7 +44,7 @@ Demo chỉ cho phép mở trên máy này, sử dụng `data-demo/` riêng. Khô
 ## Dùng dữ liệu thật trên một máy
 
 1. Dừng bản mẫu bằng Ctrl+C trong terminal.
-2. Tạo tài khoản quản lý của riêng bạn:
+2. Bấm **setup.cmd** để tạo tài khoản quản lý của riêng bạn, hoặc chạy:
 
    ```powershell
    python server.py --init

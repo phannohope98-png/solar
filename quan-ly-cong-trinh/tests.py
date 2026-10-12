@@ -5,6 +5,8 @@ import secrets
 import shutil
 import threading
 import unittest
+import zipfile
+import sqlite3
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -180,6 +182,24 @@ class ApplicationTests(unittest.TestCase):
         req=urllib.request.Request(self.base+'/data/solar.sqlite3')
         with self.assertRaises(urllib.error.HTTPError) as result: urllib.request.urlopen(req)
         self.assertEqual(result.exception.code,401)
+
+    def test_backup_preserves_records_and_attachments_without_sessions(self):
+        target = self.temp_path.parent / (self.temp_path.name + '-backup.zip')
+        copy = self.temp_path.parent / (self.temp_path.name + '-check.sqlite3')
+        try:
+            server.backup(target)
+            with zipfile.ZipFile(target) as archive:
+                copy.write_bytes(archive.read('solar.sqlite3'))
+                self.assertIn('solar.sqlite3', archive.namelist())
+            con = sqlite3.connect(copy)
+            try:
+                self.assertEqual(con.execute('SELECT count(*) FROM sessions').fetchone()[0],0)
+                self.assertGreater(con.execute('SELECT count(*) FROM entities').fetchone()[0],0)
+            finally: con.close()
+            with self.assertRaises(server.Invalid): server.backup(target)
+        finally:
+            target.unlink(missing_ok=True)
+            copy.unlink(missing_ok=True)
 
 
 if __name__=='__main__': unittest.main(verbosity=2)
