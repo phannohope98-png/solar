@@ -66,7 +66,7 @@
       const database=await this.open();
       return new Promise((resolve,reject)=>{const tx=database.transaction('state','readwrite');const store=tx.objectStore('state');const req=store.get('workspace');let result,problem;req.onsuccess=()=>{try{const db=req.result||seed();result=fn(db);store.put(db,'workspace');}catch(error){problem=error;tx.abort();}};tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(problem||new Error('Không lưu được dữ liệu. Kiểm tra dung lượng trình duyệt.'));tx.onabort=()=>reject(problem||new Error('Thao tác đã hủy; dữ liệu cũ được giữ nguyên.'));});
     }
-    async read() {return this.mutate(db=>structuredClone(db));}
+    async read() {return this.mutate(db=>{root.SolarWorkflow?.migrate(db);return structuredClone(db);});}
     async replace(value) {const database=await this.open();return new Promise((resolve,reject)=>{const tx=database.transaction('state','readwrite');tx.objectStore('state').put(value,'workspace');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(new Error('Không khôi phục được dữ liệu.'));});}
   }
   class Engine {
@@ -75,9 +75,11 @@
     project(db,user,id) {const p=db.projects.find(p=>p.id===id&&!p.deleted);if(!p)fail('Công trình không tồn tại.');if(user.role==='field'&&!p.members.includes(user.id))fail('Bạn chưa được phân công công trình này.');return p;}
     audit(db,user,action,item,kind) {db.audit.unshift({id:uid(),at:stamp(),actor:user.name,action,entity_id:item.id,kind});db.audit=db.audit.slice(0,200);}
     view(db) {
+      root.SolarWorkflow?.migrate(db);
       const user=this.user(db),allowed=new Set(db.projects.filter(p=>!p.deleted&&(user.role!=='field'||p.members.includes(user.id))).map(p=>p.id));
       const state={me:{id:user.id,name:user.name,username:user.username,role:user.role,csrf:'browser-pilot'},demo:true,browser:true,phases:PHASES,users:db.users.map(({passwordHash,...u})=>u),audit:user.role==='manager'?db.audit.slice(0,40):[]};
       for(const kind of KINDS)state[kind]=db[kind].filter(item=>!item.deleted&&(kind==='projects'?allowed.has(item.id):allowed.has(item.project_id))&&!(user.role==='field'&&(kind==='payments'||kind==='documents'&&PRIVATE_DOCS.includes(item.category)))).map(item=>{const copy=structuredClone(item);if(user.role==='field'&&kind==='projects')delete copy.contract_value;return copy;});
+      if(root.SolarWorkflow)Object.assign(state,root.SolarWorkflow.view(db,user,allowed));
       return state;
     }
     async request(path,options={}) {
@@ -86,6 +88,7 @@
       if(path==='login') {const db=await this.storage.read();const user=db.users.find(u=>u.username===String(data.username||'').trim().toLowerCase());if(!user)fail('Tên đăng nhập không đúng.');const ok=user.passwordHash?await hash(String(data.password))===user.passwordHash:data.password==='SolarDemo2026!';if(!ok)fail('Mật khẩu thử không đúng.');this.session.set(user.id);return {ok:true};}
       if(path==='logout') {this.session.clear();return {ok:true};}
       if(path==='state')return this.view(await this.storage.read());
+      if(path.startsWith('operations/')&&method==='POST')return this.storage.mutate(db=>root.SolarWorkflow.apply(this,db,path.slice(11),data));
       if(path==='users'&&method==='POST') {
         const username=text(data,'username',true,80).toLowerCase(),name=text(data,'name',true,100),role=choice(data,'role',['manager','accountant','field']);
         if(!/^[a-z0-9._-]+$/.test(username))fail('Tên đăng nhập dùng chữ không dấu, số, dấu chấm hoặc gạch.');
@@ -131,6 +134,7 @@
     async file(id) {const db=await this.storage.read(),user=this.user(db),item=db.documents.find(x=>x.id===id&&!x.deleted);if(!item)fail('Hồ sơ không tồn tại.');this.project(db,user,item.project_id);if(user.role==='field'&&PRIVATE_DOCS.includes(item.category))fail('Bạn không được xem chứng từ tài chính.');const blob=db.files[id];if(!blob)fail('Tệp không tồn tại.');return {blob,name:item.filename};}
     async backup() {
       const db=await this.storage.read(),user=this.user(db);if(user.role!=='manager')fail('Chỉ quản lý được sao lưu bản thử.');
+      root.SolarWorkflow?.migrate(db);
       const files={};for(const [id,blob] of Object.entries(db.files)) {const bytes=new Uint8Array(await blob.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));files[id]={type:blob.type,data:root.btoa(binary)};}
       return JSON.stringify({format:'khai-minh-ops-browser',version:1,exported:stamp(),workspace:{...db,files}},null,2);
     }
@@ -143,6 +147,7 @@
       if(!db.users.some(u=>u.role==='manager'))fail('Bản sao lưu cần có quản lý.');
       for(const kind of KINDS) {if(!Array.isArray(db[kind])||db[kind].length>20000)fail('Dữ liệu sao lưu không hợp lệ.');const ids=new Set();for(const item of db[kind]){if(typeof item.id!=='string'||ids.has(item.id)||!Number.isInteger(item.version)||item.version<1)fail('Mã hồ sơ không hợp lệ hoặc trùng.');ids.add(item.id);if(kind!=='documents'){validate(kind,item,db);}if(kind!=='projects'&&!db.projects.some(p=>p.id===item.project_id))fail('Hồ sơ không gắn với công trình hợp lệ.');}}
       const files={};for(const item of db.documents){if(!item.deleted){const entry=db.files[item.id];if(!entry||typeof entry.data!=='string')fail('Bản sao lưu thiếu tệp hồ sơ.');const binary=root.atob(entry.data);if(binary.length>10*1024*1024)fail('Tệp trong sao lưu quá lớn.');files[item.id]=new Blob([Uint8Array.from(binary,c=>c.charCodeAt(0))],{type:entry.type||'application/octet-stream'});}}
+      root.SolarWorkflow?.validateBackup(db);
       await this.storage.replace({...db,files});this.session.clear();return {ok:true};
     }
     async reset() {const db=await this.storage.read();if(this.user(db).role!=='manager')fail('Chỉ quản lý được đặt lại dữ liệu mẫu.');await this.storage.replace(seed());this.session.clear();}

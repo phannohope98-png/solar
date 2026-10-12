@@ -1,4 +1,11 @@
 // Remove only the retired solar calculator's worker and cache.
+window.addEventListener('error', event => {
+  const message = document.createElement('p');
+  message.setAttribute('role', 'alert');
+  message.style.cssText='padding:16px;background:#fff0f0;color:#a32638';
+  message.textContent='Không tải được một phần giao diện: '+(event.message||'Kiểm tra kết nối rồi tải lại trang.');
+  document.body.append(message);
+});
 (async () => {
   if (!location.hostname.endsWith('.github.io')) return;
   try {

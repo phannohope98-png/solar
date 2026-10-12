@@ -14,7 +14,21 @@ Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại b
 
 GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Không thay đổi ứng dụng ở thư mục gốc repo.
 
-## Giải quyết việc gì?
+## Bản vận hành 2.0 trên GitHub Pages
+
+Mở https://phannohope98-png.github.io/solar/ và chọn **Quản lý**, **Kế toán** hoặc **Thi công**. Giao diện có menu phía trên, hành động trực tiếp trên từng dòng và nhóm thao tác nhanh trong công trình.
+
+- **Đội & hiện trường:** lịch công tác theo ngày và nhân sự; chặn trùng lịch; hủy lịch để điều đội lại; giao việc, hoàn thành nhanh; nhật ký ngày có số người, việc đã làm, vướng mắc, kế hoạch và tệp ảnh.
+- **Vật tư:** nhập kế hoạch; lập yêu cầu mua → duyệt/từ chối → đặt mua với nhà cung cấp → nhận một phần/đủ. Mỗi lần nhận/dùng/hoàn trả cập nhật tồn tại công trình và giữ phiếu lịch sử. Không cho sử dụng hoặc trả vượt số chưa dùng. Đây là sổ tại từng công trình, chưa phải kho tổng/điều chuyển giữa kho.
+- **Tiền:** lập khoản phải thu/chi, ghi nhiều lần thanh toán trên cùng một khoản, tự tính còn lại; chặn ghi vượt khoản và gửi trùng cùng biểu mẫu. Tải chứng từ ngay khi ghi tiền hoặc đối soát. Quản lý có thể hủy phiếu nhập nhầm, giữ lý do và lịch sử. Đối soát là xác nhận của người dùng, chưa kết nối ngân hàng.
+- **Bàn giao:** checklist liên kết tệp nghiệm thu, hoàn công, hướng dẫn, serial/bảo hành và lịch bảo trì. Chưa quản lý serial từng thiết bị hoặc tự gửi nhắc bảo trì.
+- **Dữ liệu:** giữ dữ liệu bản 1, chuyển tiền đã thanh toán thành phiếu đầu kỳ đúng một lần; sao lưu/khôi phục có cả lịch, nhật ký, yêu cầu mua, phiếu vật tư và phiếu tiền.
+
+Các luồng 2.0 hiện hoạt động trong **chế độ trình duyệt**. Chạy thử tại máy bằng static HTTP server và `?mode=browser`. Backend Python dưới đây giữ chức năng bản 1; chưa có API cho các luồng 2.0 và chưa phải bản dùng chung nhiều nhân viên. Vai trò trên Pages chỉ mô phỏng nghiệp vụ, không bảo vệ dữ liệu trước người có quyền truy cập trình duyệt. Chưa có đồng bộ nhiều thiết bị, xuất hóa đơn điện tử, sổ kế toán hoặc ứng dụng chạy ngoại tuyến. Dữ liệu chỉ ở trình duyệt hiện tại; xuất sao lưu thường xuyên.
+
+Kiểm thử: `node --test browser-tests.cjs workflow-tests.cjs`. Trong môi trường không cho tạo tiến trình con: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs` (Node hỗ trợ tùy chọn này).
+
+## Chức năng nền của bản 1
 
 - **Tổng quan:** công trình đang chạy, việc trễ/bị vướng, vật tư thiếu, khoản thu/chi quá hạn.
 - **Mỗi công trình một hồ sơ:** khách hàng, vị trí, công suất, giá trị hợp đồng, đội phụ trách và ngày bàn giao.
