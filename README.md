@@ -14,6 +14,19 @@ Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại b
 
 GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Ứng dụng quản lý được phục vụ ngay tại thư mục gốc repo.
 
+## Bản điều phối Hôm nay — phân tích trước, tổ chức lại thao tác
+
+Đọc [phân tích tình huống và quyết định thiết kế](PROJECT-ANALYSIS.md): phân biệt căn cứ nghiên cứu, suy luận nghiệp vụ, chức năng đã làm và giới hạn còn lại.
+
+- Năm điểm vào chính: Hôm nay, Công trình, Việc của đội, Lịch đội, Hồ sơ. Công cụ gom các mục ít dùng. Biểu đồ và việc đã hoàn thành thu gọn mặc định.
+- Hôm nay: ưu tiên điểm nghẽn gấp, việc vướng / quá hạn, chưa giao người, đến hạn, vật tư và điều kiện chưa xác nhận. Mỗi mục có người, công trình, hạn và nút xử lý. Có bộ lọc Việc của tôi.
+- Điểm nghẽn riêng: nhóm vấn đề, ưu tiên, người xử lý, hạn, kết quả và lịch sử. Có thể đổi người, mức ưu tiên, mở lại việc đã xử lý; không mất báo cáo đầu tiên.
+- Điều kiện: điều kiện riêng cho lắp đặt, vệ sinh, bảo trì. Ban đầu là Chưa xác nhận. Ghi căn cứ / lý do không áp dụng và tệp bằng chứng; quản lý xác nhận. Không thay nghiệm thu hay đánh giá kỹ thuật.
+- Tạo công trình gọn: thông tin thiết yếu và đội; tạo sẵn tám việc đúng loại có người theo dõi. Thông tin thiết bị và lịch bổ sung sau. Công trình có bốn tab thường dùng: Việc & vướng, Điều kiện, Hồ sơ, Nhật ký.
+- Bản sao lưu giữ phát sinh và lịch sử điều kiện; dữ liệu mới được kiểm tra trước khi khôi phục. Vai trò Pages vẫn chỉ mô phỏng và dữ liệu chỉ ở trình duyệt hiện tại. Backend v1 chưa hỗ trợ các luồng mới.
+
+Kiểm thử model: **41/41 đạt**. Lệnh: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs project-tests.cjs focus-tests.cjs`. Đã thử trên giao diện: tạo dịch vụ và việc mẫu, báo / đóng phát sinh, xác nhận thiếu căn cứ bị chặn, lưu căn cứ, mở vật tư qua Công cụ.
+
 ## Điều phối trực quan — cập nhật giao diện
 
 Thu chi & công nợ đã gỡ khỏi giao diện Pages: menu, thẻ công trình, tab, nút lập tiền và trường hợp đồng. Dữ liệu cũ vẫn được giữ trong bản sao lưu; backend v1 và các model lịch sử chưa bị xóa.

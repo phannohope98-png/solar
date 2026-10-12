@@ -150,6 +150,7 @@
       for(const kind of KINDS) {if(!Array.isArray(db[kind])||db[kind].length>20000)fail('Dữ liệu sao lưu không hợp lệ.');const ids=new Set();for(const item of db[kind]){if(typeof item.id!=='string'||ids.has(item.id)||!Number.isInteger(item.version)||item.version<1)fail('Mã hồ sơ không hợp lệ hoặc trùng.');ids.add(item.id);if(kind!=='documents'){validate(kind,item,db);}if(kind!=='projects'&&!db.projects.some(p=>p.id===item.project_id))fail('Hồ sơ không gắn với công trình hợp lệ.');}}
       const files={};for(const item of db.documents){if(!item.deleted){const entry=db.files[item.id];if(!entry||typeof entry.data!=='string')fail('Bản sao lưu thiếu tệp hồ sơ.');const binary=root.atob(entry.data);if(binary.length>10*1024*1024)fail('Tệp trong sao lưu quá lớn.');files[item.id]=new Blob([Uint8Array.from(binary,c=>c.charCodeAt(0))],{type:entry.type||'application/octet-stream'});}}
       root.SolarWorkflow?.validateBackup(db);
+      root.FocusOps?.validateBackup(db);
       await this.storage.replace({...db,files});this.session.clear();return {ok:true};
     }
     async reset() {const db=await this.storage.read();if(this.user(db).role!=='manager')fail('Chỉ quản lý được đặt lại dữ liệu mẫu.');await this.storage.replace(seed());this.session.clear();}

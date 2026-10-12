@@ -15,7 +15,7 @@ function apply(engine,db,action,d){
    if(d.version!==p.version)fail('Hồ sơ vừa thay đổi. Làm mới trước khi sửa.');
    const text=k=>{const v=d[k]||'';if(typeof v!=='string'||v.length>1000)fail('Thông tin hồ sơ không hợp lệ.');return v.trim();};
    p.project_type=d.project_type;p.system_type=text('system_type');p.equipment_note=text('equipment_note');p.service_date=text('service_date');p.service_interval=Number(d.service_interval)||0;
-   if(p.service_date&&(!/^\d{4}-\d{2}-\d{2}$/.test(p.service_date)||!Number.isFinite(Date.parse(p.service_date))))fail('Ngày dịch vụ không hợp lệ.');
+   if(p.service_date&&(!/^\d{4}-\d{2}-\d{2}$/.test(p.service_date)||!Number.isFinite(Date.parse(p.service_date))||new Date(p.service_date).toISOString().slice(0,10)!==p.service_date))fail('Ngày dịch vụ không hợp lệ.');
    if(!Number.isInteger(p.service_interval)||p.service_interval<0||p.service_interval>120)fail('Chu kỳ phải từ 0 đến 120 tháng.');
    p.version++;p.updated=new Date().toISOString();engine.audit(db,user,'Thiết lập dịch vụ',p,'projects');return {id:p.id};
  }
@@ -32,7 +32,7 @@ function apply(engine,db,action,d){
    const from=new Date(p.service_date+'T12:00:00Z'),wanted=from.getUTCDate();from.setUTCDate(1);from.setUTCMonth(from.getUTCMonth()+p.service_interval);
    const last=new Date(Date.UTC(from.getUTCFullYear(),from.getUTCMonth()+1,0)).getUTCDate();from.setUTCDate(Math.min(wanted,last));const at=from.toISOString().slice(0,10);
    const existing=db.projects.find(x=>!x.deleted&&x.recurring_parent===p.id&&x.service_date===at);if(existing)return {id:existing.id,existing:true};
-   const next={...p,id:root.crypto.randomUUID(),name:p.name+' · kỳ '+at,start_date:at,due_date:at,service_date:at,status:'Chuẩn bị',contract_value:0,version:1,recurring_parent:p.id,updated:new Date().toISOString()};delete next.deleted;db.projects.unshift(next);engine.audit(db,user,'Lập kỳ dịch vụ',next,'projects');return {id:next.id};
+   const next={...p,id:root.crypto.randomUUID(),name:p.name+' · kỳ '+at,start_date:at,due_date:at,service_date:at,status:'Chuẩn bị',contract_value:0,version:1,recurring_parent:p.id,updated:new Date().toISOString()};delete next.deleted;delete next.incidents;delete next.readiness;db.projects.unshift(next);engine.audit(db,user,'Lập kỳ dịch vụ',next,'projects');return {id:next.id};
  }
  fail('Thao tác không hợp lệ.');
 }
