@@ -16,6 +16,7 @@
     if(kind==='projects') {
       if(!Array.isArray(data.members)||data.members.some(id=>!db.users.some(u=>u.id===id)))fail('Nhân sự không hợp lệ.');
       const result={name:text(data,'name',true,180),customer:text(data,'customer',true,180),phone:text(data,'phone',false,40),address:text(data,'address',true,500),capacity:number(data,'capacity'),contract_value:number(data,'contract_value',true),start_date:day(data,'start_date'),due_date:day(data,'due_date',true),status:choice(data,'status',['Chuẩn bị','Đang thực hiện','Tạm dừng','Hoàn thành']),members:[...new Set(data.members)],note:text(data,'note')};
+      if(data.project_type!==undefined){if(!['Lắp đặt','Vệ sinh pin','Bảo trì / sửa chữa'].includes(data.project_type))fail('Loại công việc không hợp lệ.');result.project_type=data.project_type;}
       if(result.start_date&&result.start_date>result.due_date)fail('Hạn bàn giao phải sau hoặc cùng ngày bắt đầu.');
       return result;
     }
@@ -88,6 +89,7 @@
       if(path==='login') {const db=await this.storage.read();const user=db.users.find(u=>u.username===String(data.username||'').trim().toLowerCase());if(!user)fail('Tên đăng nhập không đúng.');const ok=user.passwordHash?await hash(String(data.password))===user.passwordHash:data.password==='SolarDemo2026!';if(!ok)fail('Mật khẩu thử không đúng.');this.session.set(user.id);return {ok:true};}
       if(path==='logout') {this.session.clear();return {ok:true};}
       if(path==='state')return this.view(await this.storage.read());
+      if(path.startsWith('project-workflow/')&&method==='POST')return this.storage.mutate(db=>root.SolarProjectWorkflow.apply(this,db,path.slice(17),data));
       if(path.startsWith('operations/')&&method==='POST')return this.storage.mutate(db=>root.SolarWorkflow.apply(this,db,path.slice(11),data));
       if(path==='users'&&method==='POST') {
         const username=text(data,'username',true,80).toLowerCase(),name=text(data,'name',true,100),role=choice(data,'role',['manager','accountant','field']);
@@ -117,7 +119,7 @@
         if(user.role==='field'&&kind==='tasks') {if(!item||item.assignee!==user.id)fail('Bạn chỉ cập nhật được việc của mình.');data={...item,status:data.status,note:data.note};}
         const clean=validate(kind,{...data,project_id:pid},db);
         if(item&&kind==='projects'&&db.tasks.some(t=>!t.deleted&&t.project_id===id&&t.assignee&&!clean.members.includes(t.assignee)))fail('Chuyển công việc trước khi bỏ người phụ trách khỏi đội.');
-        const result={...clean,id:id||uid(),project_id:pid,version:(item?.version||0)+1,updated:stamp()};
+        const result={...item,...clean,id:id||uid(),project_id:pid,version:(item?.version||0)+1,updated:stamp()};
         if(item)db[kind][db[kind].indexOf(item)]=result;else db[kind].unshift(result);
         this.audit(db,user,item?'Cập nhật':'Thêm',result,kind);return {id:result.id};
       });

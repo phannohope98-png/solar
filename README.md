@@ -12,9 +12,17 @@ Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại b
 
 **Phạm vi:** đây là bản thử quy trình trên một trình duyệt; không đồng bộ giữa máy/nhân viên. Các vai trò mô phỏng quyền thao tác, không phải cơ chế bảo mật cho dữ liệu công ty. Không dùng mật khẩu thật cho tài khoản thử. Khi chốt quy trình, dùng backend/máy chủ có xác thực, phân quyền và sao lưu dùng chung.
 
-GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Không thay đổi ứng dụng ở thư mục gốc repo.
+GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Ứng dụng quản lý được phục vụ ngay tại thư mục gốc repo.
 
-## Bản vận hành 2.0 trên GitHub Pages
+## Bảng điều hành công trình và dịch vụ
+
+- Bảng công trình dạng thẻ gọn: tiến độ, hạn, đội phụ trách, việc tiếp theo, vật tư thiếu và tiền; lọc theo loại dịch vụ, trạng thái, nhân sự. Biểu đồ dùng dữ liệu công việc thực tế.
+- Bảng việc Kanban bốn trạng thái, đổi trạng thái ngay trên thẻ; lịch đội 7 ngày với thao tác điều đội tại ô trống và kiểm tra trùng lịch.
+- Bản vẽ, ảnh hiện trường và biên bản: tải tệp, mở ảnh/PDF tại chỗ. Mã / phiên bản do người dùng nhập; chưa có hệ thống quản lý phiên bản bản vẽ tự động.
+- Ba quy trình riêng: lắp đặt, vệ sinh pin, bảo trì / sửa chữa. Mỗi mẫu có tám việc, thêm lại không tạo trùng; cần giao người và điều chỉnh hạn thực tế.
+- Lịch dịch vụ định kỳ, ghi chú thiết bị/vị trí; lập hồ sơ kỳ tiếp riêng để giữ lịch sử kỳ cũ. Kỳ mới cần nhập giá và giao việc, chưa tự gửi thông báo.
+
+## Các luồng nghiệp vụ trên GitHub Pages
 
 Mở https://phannohope98-png.github.io/solar/ và chọn **Quản lý**, **Kế toán** hoặc **Thi công**. Giao diện có menu phía trên, hành động trực tiếp trên từng dòng và nhóm thao tác nhanh trong công trình.
 
@@ -26,7 +34,7 @@ Mở https://phannohope98-png.github.io/solar/ và chọn **Quản lý**, **Kế
 
 Các luồng 2.0 hiện hoạt động trong **chế độ trình duyệt**. Chạy thử tại máy bằng static HTTP server và `?mode=browser`. Backend Python dưới đây giữ chức năng bản 1; chưa có API cho các luồng 2.0 và chưa phải bản dùng chung nhiều nhân viên. Vai trò trên Pages chỉ mô phỏng nghiệp vụ, không bảo vệ dữ liệu trước người có quyền truy cập trình duyệt. Chưa có đồng bộ nhiều thiết bị, xuất hóa đơn điện tử, sổ kế toán hoặc ứng dụng chạy ngoại tuyến. Dữ liệu chỉ ở trình duyệt hiện tại; xuất sao lưu thường xuyên.
 
-Kiểm thử: `node --test browser-tests.cjs workflow-tests.cjs`. Trong môi trường không cho tạo tiến trình con: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs` (Node hỗ trợ tùy chọn này).
+Kiểm thử: `node --test browser-tests.cjs workflow-tests.cjs project-tests.cjs`. Trong môi trường không cho tạo tiến trình con: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs project-tests.cjs` (Node hỗ trợ tùy chọn này).
 
 ## Chức năng nền của bản 1
 

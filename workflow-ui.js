@@ -86,5 +86,6 @@ document.addEventListener('submit',async event=>{const f=event.target;if(f.id!==
  await api('operations/'+a,{method:'POST',body:d});$('#editor').close();await load();toast('Đã lưu. Số liệu và lịch sử đã cập nhật.');
  }catch(e){f.querySelector('.form-error').textContent=e.message;}finally{button.disabled=false;}});
 
+window.WorkflowActions={form:opsForm};
 window.WorkflowPages={schedule:schedulePage,purchases:purchasesPage,journal:journalPage};
 }
