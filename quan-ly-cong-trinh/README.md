@@ -2,6 +2,18 @@
 
 **Phần mềm nội bộ độc lập.** Không kết nối, chỉnh sửa hoặc dùng tài khoản website bán hàng. Đây là bản thử chạy trên một máy, có backend Python và cơ sở dữ liệu SQLite thật; giao diện web dùng được trên máy tính và điện thoại khi triển khai máy chủ nội bộ sau này.
 
+## Thử trực tiếp trên GitHub Pages — không cần tải ZIP hay cài Python
+
+**Mở [bản thử Khải Minh Ops](https://phannohope98-png.github.io/solar/quan-ly-cong-trinh/)** rồi bấm **Quản lý**, **Kế toán** hoặc **Thi công** để thử.
+
+Bản trình duyệt tự tạo bộ dữ liệu mẫu. Bạn có thể tạo/sửa công trình, thêm quy trình sáu giai đoạn, giao việc, nhập vật tư, ghi thu chi, tải/tải lại tệp hồ sơ và xuất báo cáo CSV. Dữ liệu cùng tệp được lưu thật trong **IndexedDB của trình duyệt bạn đang dùng**, không gửi dữ liệu nhập lên GitHub. Tải lại trang không làm mất hồ sơ.
+
+Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại bản sao lưu hoặc đặt lại dữ liệu mẫu. Khôi phục có bước xác nhận và kiểm tra dữ liệu trước khi thay thế. Nên sao lưu trước khi xóa dữ liệu trình duyệt hoặc đổi máy.
+
+**Phạm vi:** đây là bản thử quy trình trên một trình duyệt; không đồng bộ giữa máy/nhân viên. Các vai trò mô phỏng quyền thao tác, không phải cơ chế bảo mật cho dữ liệu công ty. Không dùng mật khẩu thật cho tài khoản thử. Khi chốt quy trình, dùng backend/máy chủ có xác thực, phân quyền và sao lưu dùng chung.
+
+GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Không thay đổi ứng dụng ở thư mục gốc repo.
+
 ## Giải quyết việc gì?
 
 - **Tổng quan:** công trình đang chạy, việc trễ/bị vướng, vật tư thiếu, khoản thu/chi quá hạn.
@@ -98,7 +110,7 @@ Backend hỗ trợ nhiều phiên đăng nhập và SQLite khóa giao dịch khi
 - Sao lưu cơ sở dữ liệu/tệp hằng ngày, kiểm tra phục hồi và quy trình cấp/thu hồi tài khoản.
 - Cân nhắc PostgreSQL, lưu trữ tệp riêng và kiểm thử tải khi số đội/công trình tăng.
 
-GitHub Pages chỉ phục vụ file tĩnh, **không chạy được backend Python/SQLite này**. Repo chứa mã nguồn để tải/cài đặt. Không lưu dữ liệu thật bằng localStorage và không gửi dữ liệu công ty lên GitHub Pages.
+GitHub Pages phục vụ **bản thử IndexedDB trên trình duyệt** ở link phía trên. GitHub Pages không chạy backend Python/SQLite và không cung cấp dữ liệu dùng chung; backend là lựa chọn triển khai máy chủ sau khi chốt quy trình.
 
 ## Giới hạn của bản 1.0
 
@@ -107,3 +119,7 @@ Chưa có kho tổng/phiếu nhập xuất, OCR hóa đơn, liên kết ngân h�
 Mã nguồn không chứa tài khoản hosting/CMS của website công ty. `.gitignore` loại cơ sở dữ liệu, tệp vận hành, bản sao lưu và biến môi trường.
 
 **Tệp chính:** `server.py` (API, SQLite, xác thực), `app.js` (giao diện và luồng thao tác), `styles.css`, `index.html`, `tests.py`, `start-demo.cmd`, `start.cmd`.
+
+## Kiểm thử chế độ trình duyệt
+
+Nếu có Node.js 20+: `node --test browser-tests.cjs`. Các kiểm thử này chạy model trên bộ lưu trữ tạm; kiểm tra công trình, công việc, vai trò mẫu, vật tư, tiền, hồ sơ, sao lưu/khôi phục và xung đột phiên bản. Kiểm tra giao diện thực tế dùng link GitHub Pages phía trên.

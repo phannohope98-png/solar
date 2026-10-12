@@ -310,7 +310,7 @@ class Handler(BaseHTTPRequestHandler):
             origin = self.headers.get('Origin')
             if origin and urlsplit(origin).netloc != self.headers.get('Host'):
                 raise Forbidden('Nguồn yêu cầu không hợp lệ.')
-        if method == 'GET' and path in {'/', '/index.html', '/app.js', '/styles.css', '/logo.svg'}:
+        if method == 'GET' and path in {'/', '/index.html', '/app.js', '/browser-store.js', '/styles.css', '/logo.svg'}:
             file = ROOT / ('index.html' if path == '/' else path[1:])
             self.send(200, file.read_bytes(), mimetypes.guess_type(str(file))[0] or 'text/plain')
             return
