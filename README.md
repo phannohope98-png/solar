@@ -14,6 +14,12 @@ Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại b
 
 GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Ứng dụng quản lý được phục vụ ngay tại thư mục gốc repo.
 
+## Điều phối trực quan — cập nhật giao diện
+
+Thu chi & công nợ đã gỡ khỏi giao diện Pages: menu, thẻ công trình, tab, nút lập tiền và trường hợp đồng. Dữ liệu cũ vẫn được giữ trong bản sao lưu; backend v1 và các model lịch sử chưa bị xóa.
+
+Sơ đồ giai đoạn tương tác và biểu đồ vòng trạng thái dùng số công việc thực tế. Bấm nút giai đoạn/trạng thái để lọc danh sách, chọn công trình hoặc người phụ trách. Biểu đồ vật tư thể hiện đã nhận so với nhu cầu, bấm để mở hồ sơ vật tư. Chỉnh nhanh cho phép thay người, hạn, trạng thái và ghi chú trong một biểu mẫu; trạng thái Bị vướng yêu cầu ghi lý do tại biểu mẫu này. Phân quyền và phiên bản cập nhật vẫn do model kiểm tra.
+
 ## Bảng điều hành công trình và dịch vụ
 
 - Bảng công trình dạng thẻ gọn: tiến độ, hạn, đội phụ trách, việc tiếp theo, vật tư thiếu và tiền; lọc theo loại dịch vụ, trạng thái, nhân sự. Biểu đồ dùng dữ liệu công việc thực tế.

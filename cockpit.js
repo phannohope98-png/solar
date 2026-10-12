@@ -3,7 +3,7 @@ if(window.SolarLocal?.enabled){
  let fleetStatus='all',fleetType='all',fleetOwner='all',boardProject='all',drawingProject='all',calendarOffset=0;
  const previousDetail=projectDetail,previousEdit=edit;
  edit=function(kind,id='',pid=''){previousEdit(kind,id,pid);if(kind==='projects'){const p=state.projects.find(p=>p.id===id);$('#edit-form .form-grid').insertAdjacentHTML('afterbegin',select('Loại công việc','project_type',['Lắp đặt','Vệ sinh pin','Bảo trì / sửa chữa'],p?.project_type||'Lắp đặt'));}};
- const hasFinance=()=>state.me.role!=='field',isManager=()=>state.me.role==='manager';
+ const hasFinance=()=>false,isManager=()=>state.me.role==='manager';
  const typeOf=p=>p.project_type||'Lắp đặt';
  const realPaid=p=>(state.receipts||[]).filter(r=>!r.voided&&r.payment_id===p.id).reduce((s,r)=>s+r.amount,0);
  const findUser=id=>userName(id);
