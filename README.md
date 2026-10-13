@@ -174,6 +174,18 @@ Mã nguồn không chứa tài khoản hosting/CMS của website công ty. `.git
 Nếu có Node.js 20+: `node --test browser-tests.cjs`. Các kiểm thử này chạy model trên bộ lưu trữ tạm; kiểm tra công trình, công việc, vai trò mẫu, vật tư, tiền, hồ sơ, sao lưu/khôi phục và xung đột phiên bản. Kiểm tra giao diện thực tế dùng link GitHub Pages phía trên.
 # Menu trái & kiểm tra công trình — 13/10/2026
 
+## Màn hình Điều hành tinh gọn — bản mới nhất 13/10/2026
+
+Menu thường dùng chỉ còn sáu mục: Điều hành, Công trình, Đội & công việc, Vật tư & giao hàng, Lịch đội, Kết quả & KPI. Hồ sơ, bản vẽ, kiểm tra, mua hàng, sơ đồ, nhân sự và sao lưu nằm trong nhóm Hồ sơ & công cụ có thể mở rộng; không bỏ các chức năng hoặc dữ liệu cũ.
+
+Điều hành gom hàng đợi từ việc vướng / quá hạn, kết quả chờ xác nhận, kiểm kê chờ đối chiếu, yêu cầu mua chờ duyệt và chuyến giao mở. Mỗi dòng có một nút xử lý đúng biểu mẫu; cập nhật công việc tại dòng. Có bộ lọc Ưu tiên / Chờ duyệt / Của tôi, công trình và tìm kiếm. Mặc định năm dòng, mở thêm khi cần. Kết quả đã báo chờ xác nhận không lặp thành việc quá hạn trong hàng đợi.
+
+Bảng đội tách đang làm, vướng và chờ xác nhận, hiện công trình / việc đang theo dõi hoặc việc tiếp theo; đây là dữ liệu được cập nhật, không phải định vị GPS hay có mặt thời gian thực. Thẻ công trình chỉ giữ loại, trạng thái, hạn, tiến độ theo số việc, điểm vướng, chờ xác nhận và nút mở.
+
+Biểu đồ trạng thái thu gọn và tiến độ nằm tại Điều hành. Nút Biểu đồ mở riêng bốn biểu đồ hiện có; trang báo cáo không lặp danh sách điều hành bên dưới.
+
+**64 kiểm thử đạt**, bao gồm hàng đợi không tính trùng kết quả chờ, tách người đang làm / chờ và giữ các loại xác nhận riêng. Đã kiểm tra giao diện lọc công trình, mở cập nhật tại dòng, báo làm thêm → chờ duyệt → mở kiểm kết quả ngay từ Điều hành và bốn biểu đồ. Bản trình duyệt vẫn chưa đồng bộ nhiều máy.
+
 ## Vật tư, vận chuyển, thực hiện và KPI — bản tiếp theo 13/10/2026
 
 - **Vận chuyển & kiểm kê:** chuyến giao có vật tư, số lượng, nguồn xuất, người giao, người nhận, hạn, mã phiếu. Luồng Chờ xuất → Đang vận chuyển → Nhận một phần / Đã nhận; quản lý có thể hủy trước xuất hoặc chốt thiếu có lý do. Nhận hàng tốt tăng tồn, hàng hỏng ghi riêng; nhận từng phần và lịch sử được giữ. Có thể liên kết yêu cầu mua đã đặt, chặn lập chuyến vượt phần chưa nhận / chưa có chuyến; hàng tốt cập nhật nhận của yêu cầu mua.

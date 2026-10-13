@@ -2,6 +2,16 @@
 
 ## Cải tiến điều phối — 13/10/2026
 
+### Tinh gọn cách điều hành — lượt tiếp theo
+
+Vấn đề nhận thấy khi thử giao diện: 17 mục menu buộc người quản lý nhớ chức năng; bảng vật tư / KPI / công việc nằm rời; nhiều nút cùng trọng số; biểu đồ lớn đẩy việc cần quyết định xuống dưới. Chưa có nghiên cứu người dùng tại công ty, đây là đánh giá từ thao tác và phản hồi trực tiếp của người dùng.
+
+Quyết định: sáu mục chính và nhóm hồ sơ/công cụ mở rộng; một màn hình Điều hành với bốn số dẫn tới đúng danh sách, hàng đợi tối đa năm dòng ban đầu, bảng đội tách đang làm / chờ / vướng, biểu đồ trạng thái nhỏ và thẻ tiến độ công trình. Hàng đợi gom việc, mua, vận chuyển, kiểm kê, kết quả. Một dòng chỉ có một hành động chính, dùng biểu mẫu và kiểm tra quyền / phiên bản hiện có. Không tự duyệt, sửa số lượng, chấm KPI hoặc suy đoán vị trí nhân viên.
+
+Phân biệt trạng thái: nhân viên đã báo xong cần kiểm kết quả; không hiển thị họ là đang thi công chỉ vì trạng thái công việc trước duyệt vẫn Đang làm. Không lặp kết quả chờ thành cảnh báo task quá hạn. Chờ xuất và đang vận chuyển đều thuộc Chuyến mở, tránh thẻ đếm chỉ hàng đang đi nhưng danh sách gồm cả hàng chưa xuất.
+
+Kiểm chứng: 64 kiểm thử đạt; kiểm tra mở cập nhật tại dòng, bộ lọc kết hợp, chờ duyệt → kiểm kết quả và báo cáo bốn biểu đồ. Các luồng chi tiết vẫn tồn tại, không xóa dữ liệu. Chưa có điều phối tự động, thông báo ngoài app hoặc dữ liệu dùng chung nhiều máy.
+
 ### Bổ sung quy trình vật tư / kết quả nhân sự
 
 Yêu cầu thực tế từ người dùng: dư / thiếu khi thi công; vận chuyển cần rõ trách nhiệm; nhân viên làm xong rồi nhận thêm việc; KPI không chỉ đếm nút Xong. Giải pháp triển khai:
