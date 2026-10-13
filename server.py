@@ -310,7 +310,7 @@ class Handler(BaseHTTPRequestHandler):
             origin = self.headers.get('Origin')
             if origin and urlsplit(origin).netloc != self.headers.get('Host'):
                 raise Forbidden('Nguồn yêu cầu không hợp lệ.')
-        if method == 'GET' and path in {'/', '/index.html', '/app.js', '/browser-store.js', '/cache-cleanup.js', '/workflow-store.js', '/workflow-ui.js', '/workflow.css', '/tech.css', '/tech-ui.js', '/cockpit.css', '/cockpit.js', '/visual-ops.js', '/visual-ops.css', '/focus-ui.js', '/focus-store.js', '/focus.css', '/quick.css', '/quick-store.js', '/quick-ui.js', '/project-workflows.js', '/styles.css', '/logo.svg'}:
+        if method == 'GET' and path in {'/', '/index.html', '/app.js', '/browser-store.js', '/cache-cleanup.js', '/workflow-store.js', '/workflow-ui.js', '/workflow.css', '/tech.css', '/tech-ui.js', '/cockpit.css', '/cockpit.js', '/visual-ops.js', '/visual-ops.css', '/focus-ui.js', '/focus-store.js', '/focus.css', '/quick.css', '/quick-store.js', '/quick-ui.js', '/workbench.css', '/workbench-store.js', '/workbench-ui.js', '/project-workflows.js', '/styles.css', '/logo.svg'}:
             file = ROOT / ('index.html' if path == '/' else path[1:])
             self.send(200, file.read_bytes(), mimetypes.guess_type(str(file))[0] or 'text/plain')
             return

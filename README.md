@@ -172,3 +172,12 @@ Mã nguồn không chứa tài khoản hosting/CMS của website công ty. `.git
 ## Kiểm thử chế độ trình duyệt
 
 Nếu có Node.js 20+: `node --test browser-tests.cjs`. Các kiểm thử này chạy model trên bộ lưu trữ tạm; kiểm tra công trình, công việc, vai trò mẫu, vật tư, tiền, hồ sơ, sao lưu/khôi phục và xung đột phiên bản. Kiểm tra giao diện thực tế dùng link GitHub Pages phía trên.
+# Menu trái & kiểm tra công trình — 13/10/2026
+
+Menu máy tính cố định bên trái, chia Điều hành / Hiện trường / Theo dõi. Điện thoại dùng nút Mở menu để mở từ cạnh trái. Vật tư, mua hàng, bản vẽ, dịch vụ, sơ đồ và sao lưu mở trực tiếp.
+
+Màn hình **Kiểm tra công trình** tổng hợp việc chưa giao, việc vướng / phát sinh, việc quá hạn, vật tư thiếu, điều kiện chưa xác nhận và số tệp. Bấm từng ô để mở tab xử lý của công trình; nút Lịch đội và Bàn giao mở luồng tương ứng. Có bộ lọc hồ sơ cần bổ sung / xử lý và tìm tên, khách, địa điểm. Số tệp không phải xác nhận đủ hồ sơ; điều kiện phần mềm không thay nghiệm thu kỹ thuật.
+
+**Cách sử dụng** hướng dẫn sáu bước từ lập công trình đến bàn giao và sao lưu, có nút mở từng màn hình. Bốn biểu đồ và cập nhật tại dòng vẫn giữ.
+
+Kiểm thử: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs project-tests.cjs focus-tests.cjs quick-tests.cjs workbench-tests.cjs` — **49/49 đạt**. Bản Pages vẫn là một workspace trên một trình duyệt; backend v1 chưa hỗ trợ các luồng mới.

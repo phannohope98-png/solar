@@ -1,5 +1,19 @@
 # Phân tích nghiệp vụ và quyết định thiết kế
 
+## Cải tiến điều phối — 13/10/2026
+
+Qua rà soát giao diện và các luồng hiện có, vấn đề chính là người dùng phải nhớ mục nào nằm trong Công cụ và mở từng công trình để đối chiếu. Đây là đánh giá thiết kế, chưa phải kết quả phỏng vấn nhân viên công ty.
+
+- Menu cố định bên trái trên máy tính, chia Điều hành / Hiện trường / Theo dõi. Vật tư, mua hàng, bản vẽ, dịch vụ và sơ đồ đi thẳng từ menu. Trên điện thoại, nút Mở menu mở cùng menu từ cạnh trái.
+- Kiểm tra công trình tổng hợp sáu mục: lập / giao việc, vướng mắc / phát sinh, quá hạn, vật tư thiếu, điều kiện chuyển bước, tệp hồ sơ. Mỗi ô mở đúng tab công trình. Hồ sơ chưa có công việc và chưa có tệp vẫn được nhắc; công việc hoàn thành không bị tính quá hạn hoặc chưa giao người.
+- Điều kiện chưa xác nhận không được suy thành đã sẵn sàng; tệp hồ sơ chỉ là số tệp, không khẳng định đầy đủ hay hợp lệ. Hoàn thành công việc vẫn tách khỏi nghiệm thu kỹ thuật.
+- Cách sử dụng có sáu bước và nút mở màn hình: lập hồ sơ → giao người / hạn → chuẩn bị hiện trường → cập nhật → lưu bằng chứng / bàn giao → sao lưu.
+- Bốn biểu đồ mở sẵn ở Hôm nay; số liệu lấy từ workspace hiện tại. Chưa có đo sản lượng hay đồng bộ giữa máy.
+
+Tình huống cần tiếp tục hoàn thiện sau khi chốt nghiệp vụ thực tế: khách đổi phạm vi cần phiên bản thiết kế và duyệt thay đổi; xuất vật tư cần kho tổng và phiếu theo người nhận; bàn giao cần tồn tại còn mở và chữ ký; lịch đội cần ca theo giờ; bảo trì cần sổ thiết bị theo serial. Các phần này chưa được giả lập thành tính năng đã hoạt động.
+
+Kiểm chứng bản này: 49 kiểm thử đạt; kiểm tra giao diện menu trái, tổng hợp công trình, mở vật tư từ ô thiếu và hướng dẫn sử dụng. Các phần cũ dưới đây mô tả những lần cải tiến trước; điều hướng và biểu đồ áp dụng thiết kế mới ở trên.
+
 Ngày: 12/10/2026. Phạm vi: bản thử một trình duyệt tại repo solar; đã bỏ Thu chi & công nợ theo yêu cầu.
 
 ## Căn cứ và giới hạn của nghiên cứu
