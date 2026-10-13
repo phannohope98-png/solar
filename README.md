@@ -14,6 +14,14 @@ Vào **Dữ liệu & sao lưu** để xuất JSON có kèm tệp, nhập lại b
 
 GitHub Pages chạy các tệp `index.html`, `app.js`, `browser-store.js`, `styles.css`, `logo.svg` trong thư mục này. Backend Python ở các phần bên dưới là lựa chọn triển khai độc lập, không bắt buộc để mở link thử. Ứng dụng quản lý được phục vụ ngay tại thư mục gốc repo.
 
+## Cập nhật trực tiếp & biểu đồ — 13/10/2026
+
+Bắt đầu / Xong ngay trên dòng việc. Báo vướng hoặc Sửa tại dòng mở phần nhập ngay bên dưới, giữ ngữ cảnh. Có hoàn tác lần vừa sửa trong phiên hiện tại; không hoàn tác nếu việc đã được cập nhật tiếp. Việc chưa có người phải giao người trước khi bắt đầu / hoàn thành.
+
+Việc của đội dùng danh sách có bộ lọc công trình, trạng thái, nhân sự; sửa trạng thái, người, hạn, ghi chú tại dòng. Hôm nay hiển thị sẵn biểu đồ trạng thái, tiến độ công trình, số việc đang mở theo nhân sự và nhóm hạn. Tiến độ là tỷ lệ số việc hoàn thành, không phải khối lượng nghiệm thu; phân bổ là số việc, không phải giờ công.
+
+Kiểm thử: `node --test --test-isolation=none browser-tests.cjs workflow-tests.cjs project-tests.cjs focus-tests.cjs quick-tests.cjs`. **47/47 kiểm thử đạt.** Luồng trình duyệt đã kiểm tra: bắt đầu, hoàn tác, báo vướng tại dòng, lưu và tải lại trang.
+
 ## Bản điều phối Hôm nay — phân tích trước, tổ chức lại thao tác
 
 Đọc [phân tích tình huống và quyết định thiết kế](PROJECT-ANALYSIS.md): phân biệt căn cứ nghiên cứu, suy luận nghiệp vụ, chức năng đã làm và giới hạn còn lại.
