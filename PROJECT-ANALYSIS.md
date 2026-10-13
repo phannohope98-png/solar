@@ -2,6 +2,26 @@
 
 ## Cải tiến điều phối — 13/10/2026
 
+### Bổ sung quy trình vật tư / kết quả nhân sự
+
+Yêu cầu thực tế từ người dùng: dư / thiếu khi thi công; vận chuyển cần rõ trách nhiệm; nhân viên làm xong rồi nhận thêm việc; KPI không chỉ đếm nút Xong. Giải pháp triển khai:
+
+| Khâu | Ai ghi / ai xác nhận | Đầu ra và xử lý ngoại lệ |
+|---|---|---|
+| Lập kế hoạch vật tư / mua | Quản lý chốt kế hoạch; đội yêu cầu, quản lý duyệt mua | Cần / đã nhận / đã dùng; thay phạm vi phải sửa kế hoạch có căn cứ. Chưa có phiên bản BOQ. |
+| Lập chuyến / xuất | Quản lý ghi nguồn, người giao, người nhận, hạn, mã phiếu và xuất | Chặn chuyến vượt phần đặt mua chưa có chuyến nếu liên kết yêu cầu. Không trừ kho tổng vì app chưa quản lý kho tổng. |
+| Nhận | Người nhận được giao hoặc quản lý | Đếm tốt / hỏng; chỉ tốt tăng tồn, giữ phần còn giao. Chốt thiếu có lý do; hỏng ghi yêu cầu đổi / xử lý trong ghi chú, chưa có sổ hàng lỗi độc lập. |
+| Sử dụng / hoàn trả | Đội hoặc quản lý | Số lượng, phiếu, người ghi, công việc liên kết tùy chọn. Không dùng / trả vượt hàng còn. Hoàn trả giảm tồn công trình; chưa cộng sang kho khác. |
+| Kiểm kê | Đội báo, quản lý đối chiếu | Không sửa sổ ngay; giữ số theo sổ lúc đếm, thực đếm, lý do, phiên bản vật tư. Chặn duyệt nếu sau đếm đã phát sinh giao dịch. |
+| Giao việc / định mức | Quản lý | Người, hạn, khâu, kết quả cần đạt và điểm nỗ lực 1–20. Không sửa điểm của việc đã xác nhận. |
+| Báo kết quả | Người được giao hoặc quản lý báo thay | Ngày, kết quả, giờ khai báo, bằng chứng tùy chọn; một kết quả đang chờ / được xác nhận cho mỗi việc. |
+| Kiểm kết quả | Quản lý | Xác nhận đạt có căn cứ hoặc làm lại; làm lại mở việc và không cộng điểm. Lịch sử giữ người kiểm và kết quả. |
+| Làm thêm | Người làm báo phát sinh, quản lý duyệt | Tạo việc riêng, lưu lý do, khâu và kết quả; điểm được duyệt riêng, tránh sửa việc cũ để cộng thêm. Việc được giao mới tiếp tục quy trình giao / định mức bình thường. |
+
+KPI hiển thị số liệu có thể giải thích: điểm kết quả đã xác nhận, số việc được giao / làm thêm đã xác nhận, đúng hạn của việc được giao, giờ tự khai báo, kết quả chờ. Không xếp hạng tự động, không quy đổi thành lương / thưởng; chưa có hệ số độ khó thống nhất toàn công ty, chấm chất lượng theo rubric hay giờ công được đối chiếu. Các mốc và điểm cần thống nhất nội bộ trước khi dùng đánh giá nhân sự chính thức.
+
+62 kiểm thử đạt, có nhận một phần / hỏng, chống nhận trùng, nhận theo mua, phân quyền, báo trùng, điểm chưa duyệt, làm thêm, làm lại, kiểm kê cũ và sao lưu. Đã thử các luồng chính trên trình duyệt. Mọi thao tác này còn trong bản một trình duyệt; backend v1 chưa đồng bộ dữ liệu mới.
+
 Qua rà soát giao diện và các luồng hiện có, vấn đề chính là người dùng phải nhớ mục nào nằm trong Công cụ và mở từng công trình để đối chiếu. Đây là đánh giá thiết kế, chưa phải kết quả phỏng vấn nhân viên công ty.
 
 - Menu cố định bên trái trên máy tính, chia Điều hành / Hiện trường / Theo dõi. Vật tư, mua hàng, bản vẽ, dịch vụ và sơ đồ đi thẳng từ menu. Trên điện thoại, nút Mở menu mở cùng menu từ cạnh trái.

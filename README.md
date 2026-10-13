@@ -174,6 +174,18 @@ Mã nguồn không chứa tài khoản hosting/CMS của website công ty. `.git
 Nếu có Node.js 20+: `node --test browser-tests.cjs`. Các kiểm thử này chạy model trên bộ lưu trữ tạm; kiểm tra công trình, công việc, vai trò mẫu, vật tư, tiền, hồ sơ, sao lưu/khôi phục và xung đột phiên bản. Kiểm tra giao diện thực tế dùng link GitHub Pages phía trên.
 # Menu trái & kiểm tra công trình — 13/10/2026
 
+## Vật tư, vận chuyển, thực hiện và KPI — bản tiếp theo 13/10/2026
+
+- **Vận chuyển & kiểm kê:** chuyến giao có vật tư, số lượng, nguồn xuất, người giao, người nhận, hạn, mã phiếu. Luồng Chờ xuất → Đang vận chuyển → Nhận một phần / Đã nhận; quản lý có thể hủy trước xuất hoặc chốt thiếu có lý do. Nhận hàng tốt tăng tồn, hàng hỏng ghi riêng; nhận từng phần và lịch sử được giữ. Có thể liên kết yêu cầu mua đã đặt, chặn lập chuyến vượt phần chưa nhận / chưa có chuyến; hàng tốt cập nhật nhận của yêu cầu mua.
+- **Tồn / thiếu / dư:** còn = đã nhận − đã dùng; nhu cầu còn lại = max(kế hoạch − đã dùng, 0); thiếu = max(nhu cầu còn lại − còn, 0); dư = max(còn − nhu cầu còn lại, 0). Bấm Ghi dùng / Trả dư / Yêu cầu bổ sung. Giao dịch dùng / trả có thể gắn công việc trong công trình, giữ người ghi, phiếu và ghi chú. Không tự suy hàng còn chưa dùng là hàng dư.
+- **Kiểm kê:** nhân viên ghi số thực đếm và lý do. Quản lý đối chiếu mới điều chỉnh sổ; nếu vật tư đã đổi sau đếm, chặn ghi đè và yêu cầu đếm lại. Điều chỉnh giữ phiếu và mức chênh lệch. Không bao gồm kho tổng hay điều chuyển giữa các kho / công trình.
+- **Ai đang làm gì:** chia theo sáu khâu; từng dòng có công trình, người, hạn, trạng thái, tiêu chí đạt và định mức. Việc cũ đã đánh dấu xong nhưng chưa có kết quả được xác nhận vẫn có thể bổ sung báo cáo.
+- **Kết quả & KPI:** chọn khoảng ngày và công trình; biểu đồ điểm, việc được giao xác nhận, việc làm thêm xác nhận, đúng hạn, giờ khai báo và chờ xác nhận. Quản lý chốt 1–20 điểm nỗ lực và tiêu chí; nhân viên báo kết quả + giờ + tệp tùy chọn; quản lý xác nhận hoặc yêu cầu làm lại kèm căn cứ. Bấm Báo hoàn thành trên dòng việc mở báo cáo, không tự cộng KPI.
+- **Làm thêm sau khi xong:** nhận việc được giao mới thì tạo việc mới và định mức như bình thường. Việc phát sinh đã làm dùng “Báo việc làm thêm”, ghi lý do / người yêu cầu, khâu, người, kết quả và giờ. Chỉ cộng điểm sau duyệt, tách khỏi việc được giao; không sửa kết quả cũ để lấy thêm điểm. Bị yêu cầu làm lại thì công việc mở lại và lần báo chưa đạt không có điểm.
+- Điểm này phục vụ theo dõi vận hành, không tự tính lương / thưởng hoặc xếp hạng nhân viên. Số việc giao trong kỳ tính theo hạn; số kết quả trong kỳ tính theo ngày thực hiện, không chia hai số thành tỷ lệ hoàn thành. Dữ liệu cũ không tự sinh điểm.
+
+Kiểm chứng: **62 kiểm thử đạt** (bổ sung `project-control-tests.cjs` vào lệnh kiểm thử); trình duyệt đã thử lập / xuất / nhận từng phần hàng tốt-hỏng, định mức → báo → xác nhận, làm thêm → duyệt điểm, kiểm kê → đối chiếu. Lưu trữ, phân quyền mẫu và chống cập nhật cũ vẫn theo bản thử trình duyệt; chưa triển khai máy chủ dùng chung cho các luồng này.
+
 Menu máy tính cố định bên trái, chia Điều hành / Hiện trường / Theo dõi. Điện thoại dùng nút Mở menu để mở từ cạnh trái. Vật tư, mua hàng, bản vẽ, dịch vụ, sơ đồ và sao lưu mở trực tiếp.
 
 Màn hình **Kiểm tra công trình** tổng hợp việc chưa giao, việc vướng / phát sinh, việc quá hạn, vật tư thiếu, điều kiện chưa xác nhận và số tệp. Bấm từng ô để mở tab xử lý của công trình; nút Lịch đội và Bàn giao mở luồng tương ứng. Có bộ lọc hồ sơ cần bổ sung / xử lý và tìm tên, khách, địa điểm. Số tệp không phải xác nhận đủ hồ sơ; điều kiện phần mềm không thay nghiệm thu kỹ thuật.
